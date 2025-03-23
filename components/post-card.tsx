@@ -2,7 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn, formatDate } from "@/lib/utils";
 import { BlogPost } from "@/store/blogSlice";
-import { Edit, MoreVertical, Share2, Trash2 } from "lucide-react";
+import { Edit, MoreVertical, Trash2 } from "lucide-react";
 import Image from "next/image";
 
 interface PostCardProps {
@@ -21,7 +21,7 @@ interface PostCardProps {
 
 export default function PostCard({ post, className }: PostCardProps) {
   // Destructure post properties
-  const { id, title, excerpt, imageUrl, date, tags, author } = post;
+  const { title, excerpt, imageUrl, date, tags, author } = post;
   return (
     <Card
       className={cn(
@@ -30,17 +30,19 @@ export default function PostCard({ post, className }: PostCardProps) {
         className
       )}
     >
+      {/* Header with Image and Options */}
       <div className="relative">
+        {/* Image */}
         <div className="overflow-hidden">
           <Image
-            src={imageUrl || "/placeholder.svg"}
+            src={imageUrl || "/assets/images/placeholder.webp"}
             alt={title}
             width={600}
             height={400}
             className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
           />
         </div>
-
+        {/* Options Dropdown menu */}
         <div className="top-3 right-3 z-10 absolute">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -81,11 +83,8 @@ export default function PostCard({ post, className }: PostCardProps) {
           </div>
         </div>
       </div>
-
       <CardContent className="p-4">
-        <div>
-          {author}
-        </div>
+        <div>{author}</div>
         <div className="text-gray-500 dark:text-gray-400 text-xs">
           {formatDate(date)}
         </div>
@@ -96,16 +95,6 @@ export default function PostCard({ post, className }: PostCardProps) {
           {excerpt}
         </p>
       </CardContent>
-
-      <CardFooter className="flex justify-between px-4 py-3 border-violet-100 dark:border-violet-900 border-t">
-        <Button
-          variant="ghost"
-          size="sm"
-          className="text-gray-600 dark:text-gray-400"
-        >
-          <Share2 className="w-4 h-4" />
-        </Button>
-      </CardFooter>
     </Card>
   );
 }

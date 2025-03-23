@@ -3,6 +3,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/providers/redux-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
+import Navbar from "@/components/navbar";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { extractRouterConfig } from "uploadthing/server";
+import { ourFileRouter } from "./api/uploadthing/core";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +34,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <ReduxProvider>
           <ThemeProvider
             attribute="class"
@@ -36,7 +42,12 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <div className="dark:bg-background not-dark:bg-gradient-to-br not-dark:from-violet-50 not-dark:to-rose-50 min-h-screen">
+              {/* Header */}
+              <Navbar />
+              <main className="mx-auto px-4 py-8 container">{children}</main>
+              <Toaster />
+            </div>
           </ThemeProvider>
         </ReduxProvider>
       </body>

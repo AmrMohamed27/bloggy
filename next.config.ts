@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import env from "./lib/env";
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -9,6 +10,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         port: "",
         pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: `${env.UPLOADTHING_APP_ID}.ufs.sh`,
+        pathname: "/f/*",
       },
     ],
   },
