@@ -61,9 +61,9 @@ export default function InfiniteScrollLayout({
       {visibleItems < childrenArray.length && (
         <div ref={loaderRef} className="flex justify-center py-8">
           <div className="flex space-x-2">
-            <div className="bg-violet-600 dark:bg-violet-400 rounded-full w-2 h-2 animate-bounce delay-0"></div>
-            <div className="bg-violet-600 dark:bg-violet-400 rounded-full w-2 h-2 animate-bounce delay-200"></div>
-            <div className="bg-violet-600 dark:bg-violet-400 rounded-full w-2 h-2 animate-bounce delay-500"></div>
+            <div className="bg-violet-600 dark:bg-violet-400 rounded-full w-2 h-2 animate-bounce duration-100 delay-0"></div>
+            <div className="bg-violet-600 dark:bg-violet-400 rounded-full w-2 h-2 animate-bounce duration-100 delay-200"></div>
+            <div className="bg-violet-600 dark:bg-violet-400 rounded-full w-2 h-2 animate-bounce duration-100 delay-500"></div>
           </div>
         </div>
       )}

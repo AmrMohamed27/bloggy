@@ -5,15 +5,21 @@ import { Label } from "@/components/ui/label";
 import { PlusCircle, Grid3X3, AlignJustify } from "lucide-react";
 import { toggleLayout } from "@/store/layoutSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { DarkModeToggle } from "./DarkModeToggle";
 import Link from "next/link";
+import { DarkModeToggle } from "@/components/common/dark-mode-toggle";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const Navbar = () => {
   const layoutType = useAppSelector((state) => state.layoutState.layout);
   const dispatch = useAppDispatch();
 
   return (
-    <header className="top-0 z-10 sticky bg-white/80 dark:bg-black/60 backdrop-blur-md border-violet-100 dark:border-violet-900 border-b">
+    <header className="top-0 z-50 sticky bg-white/80 dark:bg-black/60 backdrop-blur-md border-violet-100 dark:border-violet-900 border-b">
       <div className="mx-auto px-4 py-4 container">
         <div className="flex flex-row justify-between items-center gap-4">
           <Link href="/">
@@ -27,7 +33,7 @@ const Navbar = () => {
 
           <div className="flex items-center gap-6">
             <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
+              <div className="flex flex-row-reverse items-center gap-2">
                 <Switch
                   id="layout-toggle"
                   checked={layoutType === "infinite"}
@@ -38,15 +44,35 @@ const Navbar = () => {
                   className="flex items-center gap-2"
                 >
                   {layoutType === "masonry" ? (
-                    <>
-                      <Grid3X3 className="w-4 h-4 text-violet-600 dark:text-violet-400" />
-                      <span className="max-md:hidden">Masonry</span>
-                    </>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="flex items-center gap-2">
+                            <Grid3X3 className="w-4 h-4 text-violet-600 dark:text-violet-400" />
+                            <span className="max-md:hidden">Grid</span>
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Masonry Grid</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   ) : (
-                    <>
-                      <AlignJustify className="w-4 h-4 text-rose-600 dark:text-rose-400" />
-                      <span className="max-md:hidden">Infinite</span>
-                    </>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div className="flex items-center gap-2">
+                            <AlignJustify className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+                            <span className="max-md:hidden">
+                              Infinite Scroll
+                            </span>
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>Infinite Scroll Layout</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   )}
                 </Label>
               </div>

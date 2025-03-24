@@ -7,7 +7,7 @@ export interface LayoutState {
 }
 
 const initialState: LayoutState = {
-  layout: "masonry",
+  layout: "infinite",
 };
 
 const layoutSlice = createSlice({

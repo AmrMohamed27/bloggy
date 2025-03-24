@@ -18,8 +18,8 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import createPostSchema from "@/schema/createPostSchema";
-import { createPostAsync } from "@/store/blogActions";
-import { useAppDispatch } from "@/store/hooks";
+import { updatePostAsync } from "@/store/blogActions";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { UploadButton } from "@/utils/uploadthing";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ClipboardPaste } from "lucide-react";
@@ -30,29 +30,36 @@ import TextareaAutosize from "react-textarea-autosize";
 import { toast } from "sonner";
 import { z } from "zod";
 
-const CreatePostForm = () => {
+interface Props {
+  postId: string;
+}
+
+const EditPostForm = ({ postId }: Props) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const post = useAppSelector((state) =>
+    state.blog.posts.find((post) => post.id === postId)
+  );
   // 1. Define your form.
   const form = useForm<z.infer<typeof createPostSchema>>({
     resolver: zodResolver(createPostSchema),
     defaultValues: {
-      title: "",
-      author: "",
-      tags: [],
-      imageUrl: "",
-      excerpt: "",
-      content: "",
+      title: post?.title || "",
+      author: post?.author || "",
+      tags: post?.tags || [],
+      imageUrl: post?.imageUrl || "",
+      excerpt: post?.excerpt || "",
+      content: post?.content || "",
     },
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof createPostSchema>) {
+  function onSubmit(values: z.infer<typeof createPostSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    toast(`Created post: ${values.title}`);
-    await dispatch(createPostAsync({ ...values }));
-    router.push("/");
+    toast(`Updated post: ${values.title}`);
+    dispatch(updatePostAsync({ id: postId, updates: values }));
+    router.push(`/post/${postId}`);
   }
 
   // Handle upload
@@ -203,10 +210,10 @@ const CreatePostForm = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Save</Button>
       </form>
     </Form>
   );
 };
 
-export default CreatePostForm;
+export default EditPostForm;

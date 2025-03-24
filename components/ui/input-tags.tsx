@@ -74,7 +74,7 @@ const InputTags = forwardRef<HTMLInputElement, InputTagsProps>(
             className
           )}
         >
-          <div className="flex flex-wrap flex-1 items-center gap-1 pl-2">
+          <div className="flex flex-wrap flex-1 items-center gap-1 pt-2 pl-2">
             {value.map((item, idx) => (
               <Badge key={idx} variant="secondary" className="gap-1 mr-1">
                 {item}

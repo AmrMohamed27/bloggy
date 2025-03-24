@@ -3,11 +3,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/providers/redux-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
-import Navbar from "@/components/navbar";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { Toaster } from "@/components/ui/sonner";
+import Navbar from "@/components/common/navbar";
+import Footer from "@/components/common/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,6 +47,7 @@ export default function RootLayout({
               {/* Header */}
               <Navbar />
               <main className="mx-auto px-4 py-8 container">{children}</main>
+              <Footer />
               <Toaster />
             </div>
           </ThemeProvider>
